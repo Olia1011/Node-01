@@ -1,0 +1,24 @@
+{
+  "name": "node-01",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Olia1011/Node-01.git"
+  },
+  "author": "Olia1011 <olgamelnyk10111989@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Olia1011/Node-01/issues"
+  },
+  "homepage": "https://github.com/Olia1011/Node-01#readme",
+  "dependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
