@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Olia1011/Node-01#readme",
   "dependencies": {
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "yargs": "^15.3.1"
   }
 }

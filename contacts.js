@@ -26,23 +26,29 @@ async function getContactById(id) {
 
 async function removeContact(id) {
   try {
-    const contactsItems = JSON.parse(
-      await fsPromises.readFile("./db/contacts.json", "utf-8")
+    const remove = JSON.parse(
+      await fsPromises.writeFile("./db/contacts.json", "utf-8")
     ).filter((contact) => contact.id !== id);
-    return console.log(contactsItems);
+    return console.log(remove);
   } catch (error) {
     throw error;
   }
 }
 
-async function addContact(name, email, phone) {
-  try {
-    const contactsList = JSON.parse(
-      await fsPromises.readFile("./db/contacts.json", "utf-8")
-    );
- 
+async function addContact(name, email, phone) {  
+    try{
+      const list = {
+        name: name,
+        email:email,
+        phone:phone
+      }
+      console.log(list);
+      await fsPromises.writeFile("./db/contacts.json", JSON.stringify([...contactsPath, list]));
+    
+    } catch (err) {
+      throw err;
+    }
   }
-}
 
 module.exports = {
   listContacts,
