@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-const contactRouter = require("./contacts/contacts.router");
+const contactRouter = require("./api/contacts/contacts.router");
 const morgan = require("morgan");
 
 module.exports = class ContactsServer {
