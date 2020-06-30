@@ -1,16 +1,16 @@
 const path = require("path");
-const contacts = require(path.join(__dirname, "../../db/contacts.json"));
+const contactsPath = require(path.join(__dirname, "../db/contacts"));
 const Joi = require("joi");
 const uuid = require("uuid");
 
 class ContactController {
   listContacts(req, res, next) {
-    return res.status(200).json(contacts);
+    return res.json(contactsPath)
   }
 
   _getById(req, res, next) {
     const id = parseInt(req.params.id);
-    const targetContact = contacts.find((contact) => contact.id === id);
+    const targetContact = contactsPath.find((contact) => contact.id === id);
     if (!targetContact) {
       return res.status(404).send("Not found");
     }
@@ -24,8 +24,8 @@ class ContactController {
       ...req.body,
       id,
     };
-    contacts.push(newContact);
-    console.log(contacts);
+    contactsPath.push(newContact);
+    console.log('contactsPath', contactsPath);
     return res.status(201).json(newContact);
   }
 
@@ -46,12 +46,12 @@ class ContactController {
   _updateContact(req, res, next) {
     const targetContactIndex = this.findContactIndexById(res, req.params.id);
 
-    contacts[targetContactIndex] = {
-      ...contacts[targetContactIndex],
+    contactsPath[targetContactIndex] = {
+      ...contactsPath[targetContactIndex],
       ...req.body,
     };
 
-    console.log("contacts", contacts);
+    console.log("contactsPath", contactsPath);
     return res.status(200);
   }
 
@@ -71,14 +71,14 @@ class ContactController {
 
   _removeContact(req, res, next) {
     const targetContactIndex = this.findContactIndexById(res, req.params.id);
-    contacts.splice(targetContactIndex, 1);
-    console.log(contacts);
+    contactsPath.splice(targetContactIndex, 1);
+    console.log(contactsPath);
     return res.status(200).send("contact deleted");
   }
 
   findContactIndexById(res, contactId) {
     const id = parseInt(contactId);
-    const targetContactIndex = contacts.findIndex(
+    const targetContactIndex = contactsPath.findIndex(
       (contact) => contact.id === id
     );
     if (targetContactIndex === -1) {
