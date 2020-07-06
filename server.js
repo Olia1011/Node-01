@@ -1,18 +1,20 @@
-const express = require("express");
-const cors = require("cors");
-const contactRouter = require("./api/contacts.router");
-const morgan = require("morgan");
-require("dotenv").config();
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const contactRouter = require('./api/contacts.router');
+const morgan = require('morgan');
+require('dotenv').config();
 
 module.exports = class ContactsServer {
   constructor() {
     this.server = null;
   }
 
-  start() {
+  async start() {
     this.initServer();
     this.initMiddlewares();
     this.initRoutes();
+    await this.initDatabase();
     this.startListening();
   }
 
@@ -22,17 +24,22 @@ module.exports = class ContactsServer {
 
   initMiddlewares() {
     this.server.use(express.json());
-    this.server.use(morgan("tiny"));
-    this.server.use(cors({ origin: "http://localhost:3000" }));
+    this.server.use(morgan('tiny'));
+    this.server.use(cors({ origin: 'http://localhost:3000' }));
   }
 
   initRoutes() {
-    this.server.use("/", contactRouter);
+    this.server.use('/', contactRouter);
+  }
+
+  async initDatabase() {
+    await mongoose.connect(process.env.MONGODB_URL);
   }
 
   startListening() {
-    this.server.listen(process.env.PORT, () => {
-      console.log("Server started", process.env.PORT);
+    const PORT = process.env.PORT;
+    this.server.listen(PORT, () => {
+      console.log('Server started', PORT);
     });
   }
 };
